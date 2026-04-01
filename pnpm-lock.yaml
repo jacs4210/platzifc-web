@@ -133,22 +133,6 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.45.0
         version: 2.101.1
-      next:
-        specifier: ^14.2.0
-        version: 14.2.35(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react:
-        specifier: ^18.3.0
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.0
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@platzifc/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
-      '@platzifc/ts-config':
-        specifier: workspace:*
-        version: link:../../packages/ts-config
       '@types/node':
         specifier: ^20.14.0
         version: 20.19.37
@@ -158,9 +142,25 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.7(@types/react@18.3.28)
+      next:
+        specifier: ^14.2.0
+        version: 14.2.35(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: ^18.3.0
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.0
+        version: 18.3.1(react@18.3.1)
       typescript:
         specifier: ^5.5.0
         version: 5.9.3
+    devDependencies:
+      '@platzifc/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@platzifc/ts-config':
+        specifier: workspace:*
+        version: link:../../packages/ts-config
       vitest:
         specifier: ^1.6.0
         version: 1.6.1(@types/node@20.19.37)
