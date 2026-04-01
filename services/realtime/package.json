@@ -1,0 +1,21 @@
+{
+  "name": "@platzifc/realtime",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Supabase Realtime channel management and subscriptions",
+  "scripts": {
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@platzifc/config": "workspace:*",
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "devDependencies": {
+    "@platzifc/eslint-config": "workspace:*",
+    "@platzifc/ts-config": "workspace:*",
+    "typescript": "^5.5.0",
+    "vitest": "^1.6.0"
+  }
+}

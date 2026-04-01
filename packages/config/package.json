@@ -1,0 +1,25 @@
+{
+  "name": "@platzifc/config",
+  "version": "0.0.1",
+  "description": "Platzi FC shared runtime configuration and constants",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./env": "./src/env.ts",
+    "./supabase": "./src/supabase.ts"
+  },
+  "scripts": {
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@platzifc/eslint-config": "workspace:*",
+    "@platzifc/ts-config": "workspace:*",
+    "typescript": "^5.5.0"
+  }
+}

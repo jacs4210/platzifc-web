@@ -1,0 +1,14 @@
+{
+  "name": "@platzifc/eslint-config",
+  "version": "0.0.1",
+  "description": "Platzi FC shared ESLint configuration",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.14.0",
+    "@typescript-eslint/parser": "^7.14.0",
+    "eslint-config-next": "^14.2.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0"
+  }
+}

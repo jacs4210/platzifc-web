@@ -1,0 +1,7 @@
+{
+  "name": "@platzifc/ts-config",
+  "version": "0.0.1",
+  "description": "Platzi FC shared TypeScript configurations",
+  "license": "MIT",
+  "files": ["base.json", "nextjs.json", "worker.json"]
+}
