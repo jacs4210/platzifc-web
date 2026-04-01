@@ -11,7 +11,7 @@
     "lint": "eslint src/",
     "typecheck": "tsc --noEmit",
     "test": "vitest",
-    "build": "tsc"
+    "build": "echo 'No build step needed — consumed as source via Next.js transpilePackages'"
   },
   "peerDependencies": {
     "react": "^18.3.0",
