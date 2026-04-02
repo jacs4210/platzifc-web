@@ -1,11 +1,11 @@
 import React from 'react'
 
-export interface BadgeProps {
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode
   variant?: 'primary' | 'secondary' | 'outline' | 'dot'
   status?: 'default' | 'success' | 'warning' | 'error' | 'info'
-  className?: string
   pulse?: boolean
+  pulseColor?: string
 }
 
 export default function Badge({
@@ -14,6 +14,9 @@ export default function Badge({
   status = 'default',
   className = '',
   pulse = false,
+  pulseColor,
+  style,
+  ...props
 }: BadgeProps) {
   const baseStyles = 'inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold'
   
@@ -33,11 +36,21 @@ export default function Badge({
   }
 
   return (
-    <span className={`${baseStyles} ${variants[variant]} ${className}`}>
+    <span 
+      className={`${baseStyles} ${variants[variant]} ${className}`}
+      style={{ ...style, color: pulseColor || style?.color }}
+      {...props}
+    >
       {pulse && (
         <span className="relative flex h-2 w-2 mr-1.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-current"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-current"></span>
+          <span 
+            className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+            style={{ backgroundColor: pulseColor || 'currentColor' }}
+          ></span>
+          <span 
+            className="relative inline-flex rounded-full h-2 w-2"
+            style={{ backgroundColor: pulseColor || 'currentColor' }}
+          ></span>
         </span>
       )}
       {children}
