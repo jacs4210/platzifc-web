@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { HTMLAttributes, ReactNode, CSSProperties } from 'react'
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  children: React.ReactNode
+export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+  children: ReactNode
   variant?: 'primary' | 'secondary' | 'outline' | 'dot'
   status?: 'default' | 'success' | 'warning' | 'error' | 'info'
   pulse?: boolean
   pulseColor?: string
+  style?: CSSProperties // Declaración explícita para evitar problemas de caché en el monorepo
 }
 
 export default function Badge({
@@ -18,14 +19,14 @@ export default function Badge({
   style,
   ...props
 }: BadgeProps) {
-  const baseStyles = 'inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold'
+  const baseStyles = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold'
   
   const statusStyles = {
     default: 'bg-white/10 text-gray-300 border border-white/5',
-    success: 'bg-green-primary/10 text-green-primary border border-green-primary/30',
-    warning: 'bg-yellow-primary/10 text-yellow-primary border border-yellow-primary/30',
+    success: 'bg-[#00d68f]/10 text-[#00d68f] border border-[#00d68f]/30',
+    warning: 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/30',
     error: 'bg-red-600/10 text-red-600 border border-red-600/30',
-    info: 'bg-blue-primary/10 text-blue-primary border border-blue-primary/30',
+    info: 'bg-blue-500/10 text-blue-500 border border-blue-500/30',
   }
 
   const variants = {
