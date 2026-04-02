@@ -1,27 +1,18 @@
 import { createSupabaseAdmin } from '@platzifc/config/supabase'
+import { Button, Card, Badge } from '@platzifc/ui'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Platzi FC — El club de la comunidad',
 }
 
-/**
- * Server Component that attempts to ping Supabase
- * to verify the connection status.
- */
 async function getSupabaseStatus() {
   try {
     const supabase = createSupabaseAdmin()
     const { error } = await supabase.from('players').select('count', { count: 'exact', head: true })
-    
-    if (error) {
-      console.error('Supabase connection error:', error.message)
-      return 'error'
-    }
-    
+    if (error) return 'error'
     return 'active'
   } catch (err) {
-    console.error('Failed to create Supabase client:', err)
     return 'offline'
   }
 }
@@ -30,113 +21,69 @@ export default async function HomePage() {
   const supabaseStatus = await getSupabaseStatus()
 
   return (
-    <main
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #0d1b2a 0%, #1b2d40 50%, #0d1b2a 100%)',
-        fontFamily: 'Inter, system-ui, sans-serif',
-        color: '#ffffff',
-        padding: '2rem',
-        textAlign: 'center',
-      }}
-    >
-      {/* Badge */}
-      <div
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          background: 'rgba(0,214,143,0.12)',
-          border: '1px solid rgba(0,214,143,0.3)',
-          borderRadius: '9999px',
-          padding: '0.375rem 1rem',
-          fontSize: '0.8rem',
-          letterSpacing: '0.08em',
-          textTransform: 'uppercase',
-          color: '#00d68f',
-          marginBottom: '2rem',
-          fontWeight: 600,
-        }}
-      >
-        <span>⚽</span> Fase 1 — Infraestructura activa
-      </div>
+    <div style={{ padding: '4rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
+      {/* Hero Section */}
+      <section style={{ textAlign: 'center', marginBottom: '6rem' }}>
+        <Badge variant="primary" status="success" pulse pulseColor="#00d68f" style={{ marginBottom: '1.5rem' }}>
+          FASE 1 — INFRAESTRUCTURA ACTIVA
+        </Badge>
+        
+        <h1 style={{ fontSize: 'clamp(3rem, 8vw, 5.5rem)', fontWeight: 900, marginBottom: '1.5rem', letterSpacing: '-0.04em' }}>
+          Platzi <span style={{ color: '#00d68f' }}>FC</span>
+        </h1>
+        
+        <p style={{ fontSize: '1.25rem', color: '#8a9bb0', maxWidth: '600px', margin: '0 auto 3rem auto', lineHeight: 1.6 }}>
+          La plataforma oficial del club de la comunidad tech. 
+          Eventos en vivo, noticias de fichajes y el corazón de la hinchada digital.
+        </p>
 
-      {/* Heading */}
-      <h1
-        style={{
-          fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-          fontWeight: 900,
-          lineHeight: 1.05,
-          marginBottom: '1.5rem',
-          letterSpacing: '-0.03em',
-        }}
-      >
-        Platzi{' '}
-        <span style={{ color: '#00d68f' }}>FC</span>
-      </h1>
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <Button variant="primary" size="lg">Ver Partidos</Button>
+          <Button variant="outline" size="lg">Unirse al Club</Button>
+        </div>
+      </section>
 
-      {/* Tagline */}
-      <p
-        style={{
-          fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
-          color: '#8a9bb0',
-          maxWidth: '480px',
-          marginBottom: '3rem',
-          lineHeight: 1.7,
-        }}
-      >
-        La plataforma oficial del club de la comunidad tech.
-        Próximamente: noticias, partidos en vivo, tienda y boletería.
-      </p>
+      {/* Status Grid */}
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+        <Card variant="glass">
+          <h3 style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Infraestructura</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <StatusRow label="Monorepo" status="✅" />
+            <StatusRow label="Vercel Deploy" status="✅" />
+            <StatusRow 
+              label="Supabase DB" 
+              status={supabaseStatus === 'active' ? '✅' : supabaseStatus === 'error' ? '❌' : '🔄'} 
+            />
+          </div>
+        </Card>
 
-      {/* Status Pills */}
-      <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-        <StatusPill label="Monorepo" status="✅" />
-        <StatusPill label="CI/CD" status="✅" />
-        <StatusPill 
-          label="Supabase" 
-          status={supabaseStatus === 'active' ? '✅' : supabaseStatus === 'error' ? '❌' : '🔄'} 
-        />
-        <StatusPill label="Shop" status="⏳" />
-        <StatusPill label="Tickets" status="⏳" />
-      </div>
+        <Card variant="glass">
+          <h3 style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Próximos Pasos</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <StatusRow label="Sistema de Diseño" status="🔄" />
+            <StatusRow label="Match Center" status="⏳" />
+            <StatusRow label="Auth Fans" status="⏳" />
+          </div>
+        </Card>
 
-      {/* Glow */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '600px',
-          height: '600px',
-          background: 'radial-gradient(circle, rgba(0,214,143,0.08) 0%, transparent 70%)',
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      />
-    </main>
+        <Card variant="glass">
+          <h3 style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Ecosistema</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <StatusRow label="Portal Web" status="✅" />
+            <StatusRow label="Tienda Oficial" status="⏳" />
+            <StatusRow label="Boletería" status="⏳" />
+          </div>
+        </Card>
+      </section>
+    </div>
   )
 }
 
-function StatusPill({ label, status }: { label: string; status: string }) {
+function StatusRow({ label, status }: { label: string; status: string }) {
   return (
-    <span
-      style={{
-        background: 'rgba(255,255,255,0.05)',
-        border: '1px solid rgba(255,255,255,0.1)',
-        borderRadius: '9999px',
-        padding: '0.375rem 0.875rem',
-        fontSize: '0.85rem',
-        color: '#8a9bb0',
-      }}
-    >
-      {status} {label}
-    </span>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      <span style={{ fontSize: '0.9rem', color: '#8a9bb0' }}>{label}</span>
+      <span>{status}</span>
+    </div>
   )
 }
