@@ -124,6 +124,9 @@ importers:
       '@platzifc/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@platzifc/ts-config':
+        specifier: workspace:*
+        version: link:../../packages/ts-config
       '@platzifc/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -158,9 +161,6 @@ importers:
       '@platzifc/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
-      '@platzifc/ts-config':
-        specifier: workspace:*
-        version: link:../../packages/ts-config
       vitest:
         specifier: ^1.6.0
         version: 1.6.1(@types/node@20.19.37)
