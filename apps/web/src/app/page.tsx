@@ -1,10 +1,34 @@
+import { createSupabaseAdmin } from '@platzifc/config/supabase'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Platzi FC — El club de la comunidad',
 }
 
-export default function HomePage() {
+/**
+ * Server Component that attempts to ping Supabase
+ * to verify the connection status.
+ */
+async function getSupabaseStatus() {
+  try {
+    const supabase = createSupabaseAdmin()
+    const { error } = await supabase.from('players').select('count', { count: 'exact', head: true })
+    
+    if (error) {
+      console.error('Supabase connection error:', error.message)
+      return 'error'
+    }
+    
+    return 'active'
+  } catch (err) {
+    console.error('Failed to create Supabase client:', err)
+    return 'offline'
+  }
+}
+
+export default async function HomePage() {
+  const supabaseStatus = await getSupabaseStatus()
+
   return (
     <main
       style={{
@@ -71,27 +95,14 @@ export default function HomePage() {
 
       {/* Status Pills */}
       <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {[
-          { label: 'Monorepo', status: '✅' },
-          { label: 'CI/CD', status: '✅' },
-          { label: 'Supabase', status: '🔄' },
-          { label: 'CMS', status: '🔄' },
-          { label: 'Match Center', status: '⏳' },
-        ].map(({ label, status }) => (
-          <span
-            key={label}
-            style={{
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '9999px',
-              padding: '0.375rem 0.875rem',
-              fontSize: '0.85rem',
-              color: '#8a9bb0',
-            }}
-          >
-            {status} {label}
-          </span>
-        ))}
+        <StatusPill label="Monorepo" status="✅" />
+        <StatusPill label="CI/CD" status="✅" />
+        <StatusPill 
+          label="Supabase" 
+          status={supabaseStatus === 'active' ? '✅' : supabaseStatus === 'error' ? '❌' : '🔄'} 
+        />
+        <StatusPill label="Shop" status="⏳" />
+        <StatusPill label="Tickets" status="⏳" />
       </div>
 
       {/* Glow */}
@@ -110,5 +121,22 @@ export default function HomePage() {
         }}
       />
     </main>
+  )
+}
+
+function StatusPill({ label, status }: { label: string; status: string }) {
+  return (
+    <span
+      style={{
+        background: 'rgba(255,255,255,0.05)',
+        border: '1px solid rgba(255,255,255,0.1)',
+        borderRadius: '9999px',
+        padding: '0.375rem 0.875rem',
+        fontSize: '0.85rem',
+        color: '#8a9bb0',
+      }}
+    >
+      {status} {label}
+    </span>
   )
 }
